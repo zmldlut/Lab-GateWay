@@ -92,8 +92,8 @@ public class Socket_thread implements Runnable{
 					if(((StudentDaoProxy) DaoFactory.getDaoInstance(StudentDaoProxy.class)).findDao(json.getString("userID"))) {
 						cmd = 1;
 						Student std = ((StudentDaoProxy) DaoFactory.getDaoInstance(StudentDaoProxy.class))._findDao(json.getString("userID"));
-						System.out.println("DOOROPENPACKETTYPE "+std.getStdNum());
-						DoorRecord record = new DoorRecord(std.getStdNum(), new Date(), json.getInt("id"));
+						System.out.println("DOOROPENPACKETTYPE "+std.getStdnum());
+						DoorRecord record = new DoorRecord(std.getStdnum(), new Date(), json.getInt("id"));
 						((DoorDaoProxy) DaoFactory.getDaoInstance(DoorDaoProxy.class)).doCreate(record);
 					} else {
 						cmd = 0;
@@ -104,7 +104,7 @@ public class Socket_thread implements Runnable{
 					break;
 				case C.HUMIDITYPACKETTYPE:
 					cmd = 1;
-					Humidity humidity = new Humidity(json.getInt("id"), json.getString("humidity"), new Date());
+					Humidity humidity = new Humidity(json.getInt("id"), Integer.parseInt(json.getString("humidity")), new Date());
 					((HumidityDaoProxy) DaoFactory.getDaoInstance(HumidityDaoProxy.class)).doCreate(humidity);
 					BaseDataPacket humidityCmd = new CmdPacket(json.getInt("syn")+1, json.getInt("id"), C.HUMIDITYPACKETTYPE, cmd);
 					sendPacket(out_buff, humidityCmd);
@@ -113,7 +113,7 @@ public class Socket_thread implements Runnable{
 					break;
 				case C.TEMPERPACKETTYPE:
 					cmd = 1;
-					Temperature temperature = new Temperature(json.getInt("id"), json.getString("temperature"), new Date());
+					Temperature temperature = new Temperature(json.getInt("id"), Integer.parseInt(json.getString("temperature")), new Date());
 					((TemperatureDaoProxy) DaoFactory.getDaoInstance(TemperatureDaoProxy.class)).doCreate(temperature);
 					BaseDataPacket temperCmd = new CmdPacket(json.getInt("syn")+1, json.getInt("id"), C.TEMPERPACKETTYPE, cmd);
 					sendPacket(out_buff, temperCmd);
@@ -124,8 +124,8 @@ public class Socket_thread implements Runnable{
 					if(((StudentDaoProxy) DaoFactory.getDaoInstance(StudentDaoProxy.class)).findDao(json.getString("userID"))) {
 						cmd = 1;
 						Student std = ((StudentDaoProxy) DaoFactory.getDaoInstance(StudentDaoProxy.class))._findDao(json.getString("userID"));
-						System.out.println("CHECKINPACKETTYPE "+std.getStdNum());
-						SgRecord sgRecord = new SgRecord(std.getStdNum(), new Date(), new Date(), json.getInt("id"));
+						System.out.println("CHECKINPACKETTYPE "+std.getStdnum());
+						SgRecord sgRecord = new SgRecord(std.getStdnum(), new Date(), new Date(), json.getInt("id"));
 						((SiginDaoProxy) DaoFactory.getDaoInstance(SiginDaoProxy.class)).doCreate(sgRecord);
 					} else {
 						cmd = 0;

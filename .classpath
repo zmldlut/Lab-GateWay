@@ -11,5 +11,6 @@
 	<classpathentry kind="lib" path="libs/json-lib-2.2.3-jdk15.jar"/>
 	<classpathentry kind="lib" path="libs/json-lib-2.4-jdk15.jar"/>
 	<classpathentry kind="lib" path="libs/mysql-connector-java-5.1.32-bin.jar"/>
+	<classpathentry kind="lib" path="E:/Lab/src/Gateway/libs/lab-dao.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
