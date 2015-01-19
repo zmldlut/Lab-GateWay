@@ -13,11 +13,15 @@ import net.sf.json.JSONObject;
 import com.zml.dao.factory.DaoFactory;
 import com.zml.dao.proxy.DoorDaoProxy;
 import com.zml.dao.proxy.HumidityDaoProxy;
+import com.zml.dao.proxy.LightDaoProxy;
+import com.zml.dao.proxy.PM2_5DaoProxy;
 import com.zml.dao.proxy.SiginDaoProxy;
 import com.zml.dao.proxy.StudentDaoProxy;
 import com.zml.dao.proxy.TemperatureDaoProxy;
-import com.zml.model.Humidity;
 import com.zml.model.DoorRecord;
+import com.zml.model.Humidity;
+import com.zml.model.Light;
+import com.zml.model.PM2_5;
 import com.zml.model.SgRecord;
 import com.zml.model.Student;
 import com.zml.model.Temperature;
@@ -129,6 +133,24 @@ public class Socket_thread implements Runnable{
 					System.out.println("CHECKINPACKETTYPE "+cmd);
 					BaseDataPacket checkinCmd = new CmdPacket(json.getInt("syn")+1, json.getInt("id"), C.CHECKINPACKETTYPE, cmd);
 					sendPacket(out_buff, checkinCmd);
+					acceptMessage = false;
+					break;
+				case C.PM2_5PACKETTYPE:
+					cmd = 1;
+					PM2_5 pm = new PM2_5(json.getInt("id"), Integer.parseInt(json.getString("PM2.5")), new Date());
+					((PM2_5DaoProxy) DaoFactory.getDaoInstance(PM2_5DaoProxy.class)).doCreate(pm);
+					BaseDataPacket pmCmd = new CmdPacket(json.getInt("syn")+1, json.getInt("id"), C.TEMPERPACKETTYPE, cmd);
+					sendPacket(out_buff, pmCmd);
+					System.out.println("TEMPERPACKETTYPE "+cmd);
+					acceptMessage = false;
+					break;
+				case C.LIGHTPACKETTYPE:
+					cmd = 1;
+					Light light = new Light(json.getInt("id"), json.getString("lightsensor"), new Date());
+					((LightDaoProxy) DaoFactory.getDaoInstance(LightDaoProxy.class)).doCreate(light);
+					BaseDataPacket lightCmd = new CmdPacket(json.getInt("syn")+1, json.getInt("id"), C.TEMPERPACKETTYPE, cmd);
+					sendPacket(out_buff, lightCmd);
+					System.out.println("TEMPERPACKETTYPE "+cmd);
 					acceptMessage = false;
 					break;
 				default:

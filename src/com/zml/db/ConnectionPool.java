@@ -13,9 +13,9 @@ import com.mysql.jdbc.Statement;
 public class ConnectionPool {
 
 	private static String DRIVER="com.mysql.jdbc.Driver";
-	private static String URL = "jdbc:mysql://127.0.0.1:3306/lab";
+	private static String URL = "jdbc:mysql://192.168.9.69:3306/lab";
 	private static String USERNAME = "root";
-	private static String PASSWORD = "123";
+	private static String PASSWORD = "";
 	
 	private String _testTable = ""; // 测试连接是否可用的测试表名，默认没有测试表
 	private int initialConnections = 20; // 连接池的初始大小
