@@ -146,7 +146,7 @@ public class Socket_thread implements Runnable{
 					break;
 				case C.LIGHTPACKETTYPE:
 					cmd = 1;
-					Light light = new Light(json.getInt("id"), json.getString("lightsensor"), new Date());
+					Light light = new Light(json.getInt("id"), Integer.parseInt(json.getString("lightsensor")), new Date());
 					((LightDaoProxy) DaoFactory.getDaoInstance(LightDaoProxy.class)).doCreate(light);
 					BaseDataPacket lightCmd = new CmdPacket(json.getInt("syn")+1, json.getInt("id"), C.TEMPERPACKETTYPE, cmd);
 					sendPacket(out_buff, lightCmd);
